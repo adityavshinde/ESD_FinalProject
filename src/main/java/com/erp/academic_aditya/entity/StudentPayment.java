@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 public class StudentPayment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
