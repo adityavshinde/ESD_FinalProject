@@ -1,33 +1,38 @@
 package com.erp.academic_aditya.entity;
 
-import com.erp.academic_aditya.entity.Student;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "student_payment")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "student_payment")
 public class StudentPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false) // Many student bills can refer to one student
     @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    private Student student; // Foreign key to Student
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "amount", nullable = false)
     private Double amount;
 
+    @Column(name = "payment_date", nullable = false)
     private LocalDate paymentDate;
 
-    @ManyToOne
+    @ManyToOne(optional = false) // One bill can be mapped to only one student
     @JoinColumn(name = "bill_id", nullable = false)
-    private Bills bill;
+    private Bills billId; // Foreign key to Bills
 }

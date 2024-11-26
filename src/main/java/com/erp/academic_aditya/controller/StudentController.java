@@ -1,9 +1,12 @@
 package com.erp.academic_aditya.controller;
 
+import com.erp.academic_aditya.dto.LoginRequest;
 import com.erp.academic_aditya.dto.StudentRequest;
 import com.erp.academic_aditya.entity.Student;
 import com.erp.academic_aditya.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +17,11 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
+        return ResponseEntity.ok(studentService.loginChecking(request));
+    }
 
 
     // Create a new student
@@ -28,15 +36,5 @@ public class StudentController {
         return studentService.getStudentById(id, token);
     }
 
-    // Update an existing student
-    @PutMapping("/{id}")
-    public String updateStudent(@PathVariable Long id, @RequestBody StudentRequest studentRequest, @RequestHeader("Authorization") String token) {
-        return studentService.updateStudent(id, studentRequest, token);
-    }
 
-    // Delete a student by ID
-    @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Long id, @RequestHeader("Authorization") String token) {
-        return studentService.deleteStudent(id, token);
-    }
 }

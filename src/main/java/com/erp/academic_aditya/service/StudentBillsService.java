@@ -1,5 +1,6 @@
 package com.erp.academic_aditya.service;
 
+import com.erp.academic_aditya.entity.Bills;
 import com.erp.academic_aditya.entity.StudentBills;
 import com.erp.academic_aditya.helper.JwtHelper;
 import com.erp.academic_aditya.repo.StudentBillsRepository;
@@ -21,9 +22,9 @@ public class StudentBillsService {
         return studentBillsRepository.findAll();
     }
 
-    public List<StudentBills> getBillsByStudentId(Long studentId, String token) {
-        if (headerChecking(token)) return null;
-        return studentBillsRepository.findByStudent_StudentId(studentId);
+    public List<Bills> getBillsByStudentId(Long studentId, String token) {
+//        if (headerChecking(token)) return null;
+        return studentBillsRepository.findBillsByStudentId(studentId);
     }
 
     public StudentBills saveStudentBill(StudentBills studentBill, String token) {

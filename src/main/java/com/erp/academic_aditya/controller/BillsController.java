@@ -4,17 +4,17 @@ import com.erp.academic_aditya.dto.BillsRequest;
 import com.erp.academic_aditya.dto.BillsResponse;
 import com.erp.academic_aditya.entity.Bills;
 import com.erp.academic_aditya.service.BillsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/bills")
 public class BillsController {
 
     @Autowired
     private BillsService billsService;
-
-
 
     // Fetch a bill by ID
     @GetMapping("/{id}")

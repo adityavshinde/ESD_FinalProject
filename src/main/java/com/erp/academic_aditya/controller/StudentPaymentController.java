@@ -1,31 +1,35 @@
 package com.erp.academic_aditya.controller;
 
-import com.erp.academic_aditya.entity.StudentPayment;
+import com.erp.academic_aditya.dto.PaymentHistoryResponse;
+import com.erp.academic_aditya.dto.StudentPaymentRequest;
+import com.erp.academic_aditya.dto.StudentPaymentRequest;
 import com.erp.academic_aditya.service.StudentPaymentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/student-payments")
+@RequestMapping("/payments")
+@RequiredArgsConstructor
 public class StudentPaymentController {
 
     @Autowired
-    private StudentPaymentService studentPaymentService;
-
-    @GetMapping
-    public List<StudentPayment> getAllStudentPayments(@RequestHeader("Authorization") String token) {
-        return studentPaymentService.getAllStudentPayments(token);
-    }
-
-    @GetMapping("/student/{studentId}")
-    public List<StudentPayment> getPaymentsByStudentId(@PathVariable Long studentId, @RequestHeader("Authorization") String token) {
-        return studentPaymentService.getPaymentsByStudentId(studentId, token);
-    }
+    private final StudentPaymentService paymentService;
 
     @PostMapping
-    public StudentPayment addPayment(@RequestBody StudentPayment studentPayment, @RequestHeader("Authorization") String token) {
-        return studentPaymentService.saveStudentPayment(studentPayment, token);
+    public ResponseEntity<String> handlePayment(
+            @RequestBody StudentPaymentRequest paymentRequest) {
+        paymentService.processPayment(paymentRequest);
+        return ResponseEntity.ok("Payment processed successfully");
     }
 
+    @GetMapping
+    public ResponseEntity<List<PaymentHistoryResponse>> getPaymentHistory(@RequestHeader("student_id") Long studentId) {
+        List<PaymentHistoryResponse> paymentHistory = paymentService.getPaymentHistoryForStudent(studentId);
+        return ResponseEntity.ok(paymentHistory);
+    }
 }

@@ -21,7 +21,7 @@ public class SecurityConfig  implements WebMvcConfigurer {
 
         registry.addInterceptor(requestInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**","/api/v1/payments/","/api/v1/auth/","/students","/bills/*");
+                .excludePathPatterns("/**","/api/v1/payments/","/api/v1/auth/","/students","/bills/**");
     }
 
     @Bean

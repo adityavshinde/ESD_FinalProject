@@ -1,5 +1,6 @@
 package com.erp.academic_aditya.controller;
 
+import com.erp.academic_aditya.entity.Bills;
 import com.erp.academic_aditya.entity.StudentBills;
 import com.erp.academic_aditya.service.StudentBillsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class StudentBillsController {
 
     // Fetch bills by student ID
     @GetMapping("/student/{studentId}")
-    public List<StudentBills> getBillsByStudentId(@PathVariable Long studentId, @RequestHeader("Authorization") String token) {
+    public List<Bills> getBillsByStudentId(@PathVariable Long studentId, @RequestHeader("Authorization") String token) {
         return studentBillsService.getBillsByStudentId(studentId, token);
     }
 
