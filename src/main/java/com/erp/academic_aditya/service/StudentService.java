@@ -1,6 +1,7 @@
 package com.erp.academic_aditya.service;
 
 import com.erp.academic_aditya.dto.LoginRequest;
+import com.erp.academic_aditya.dto.LoginResponse;
 import com.erp.academic_aditya.dto.StudentRequest;
 import com.erp.academic_aditya.entity.Student;
 import com.erp.academic_aditya.exception.StudentNotFound;
@@ -24,13 +25,15 @@ public class StudentService {
     private final JwtHelper jwtHelper;
     private final StudentBillsRepository studentBillsRepository;
 
-    public String loginChecking(LoginRequest req){
+    public LoginResponse loginChecking(LoginRequest req){
+
         Student student=studentRepo.findByEmail(req.email())
                 .orElseThrow(() -> new StudentNotFound("Student Not found"));
-        if(encryptionService.validates(req.password(),student.getPassword())){
-            return jwtHelper.generateToken(req.email());
+        if(!encryptionService.validates(req.password(),student.getPassword())){
+            throw new StudentNotFound("Student Not found");
         }
-        return "failed";
+        String token = jwtHelper.generateToken(req.email());
+        return new LoginResponse(student.getStudentId(),student.getFirstName(),student.getRollNo(),"Login success",token);
 
 
     }

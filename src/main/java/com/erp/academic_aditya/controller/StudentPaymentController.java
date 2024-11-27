@@ -1,12 +1,10 @@
 package com.erp.academic_aditya.controller;
 
 import com.erp.academic_aditya.dto.PaymentHistoryResponse;
-import com.erp.academic_aditya.dto.StudentPaymentRequest;
-import com.erp.academic_aditya.dto.StudentPaymentRequest;
+import com.erp.academic_aditya.dto.PaymentRequest;
 import com.erp.academic_aditya.service.StudentPaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +20,7 @@ public class StudentPaymentController {
 
     @PostMapping
     public ResponseEntity<String> handlePayment(
-            @RequestBody StudentPaymentRequest paymentRequest) {
+            @RequestBody PaymentRequest paymentRequest) {
         paymentService.processPayment(paymentRequest);
         return ResponseEntity.ok("Payment processed successfully");
     }

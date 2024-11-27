@@ -16,15 +16,7 @@ public record StudentPaymentRequest(
         Double amount ,    // Amount paid
         @JsonProperty("description")
         String description,
-        @NotNull @JsonProperty("payment_date")
-        LocalDate paymentDate,
-        @JsonProperty("credit")
-        boolean useCredit,
         @JsonProperty("total")
-        boolean useTotal,
-        @JsonProperty("balance")
-        Double creditBalance,
-        @JsonProperty("due")
-        Double totalDue
+        boolean useTotal
 ) {
 }

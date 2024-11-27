@@ -71,7 +71,7 @@ public class BillsService {
     }
 
     private boolean headerChecking(String receivedToken) {
-        String token = receivedToken.substring(7); // Extract token from "Bearer {token}"
+        String token = receivedToken.substring(7); 
         return jwtHelper.validateToken(token);
     }
 }

@@ -1,7 +1,7 @@
 package com.erp.academic_aditya.mapper;
 
+import com.erp.academic_aditya.dto.AllBillResponse;
 import com.erp.academic_aditya.dto.BillsRequest;
-import com.erp.academic_aditya.dto.BillsResponse;
 import com.erp.academic_aditya.entity.Bills;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,14 @@ public class BillsMapper {
                 .build();
     }
 
-//    public BillsResponse toBillsResponse(Bills bill) {
-//        return new BillsResponse(
-//                bill.getId(),
-//
-////                bill.getDescription()
-////                bill.getAmount(),
-////                bill.getBillDate(),
-////                bill.getDeadline()
-//        );
- //   }
+    public AllBillResponse toAllBillResponse(Bills bill, Double currentDue) {
+        return new AllBillResponse(
+                bill.getId(),
+                bill.getDescription(),
+                bill.getAmount(),
+                bill.getBillDate(),
+                bill.getDeadline(),
+                currentDue
+        );
+    }
 }
