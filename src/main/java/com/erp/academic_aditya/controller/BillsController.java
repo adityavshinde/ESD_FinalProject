@@ -23,7 +23,7 @@ public class BillsController {
     }
 
     // Add a new bill
-    @PostMapping
+    @PostMapping("/addBill")
     public BillsResponse addBill(@RequestBody BillsRequest billsRequest) {
         return billsService.addBill(billsRequest);
     }

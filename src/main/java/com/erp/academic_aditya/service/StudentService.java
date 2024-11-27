@@ -2,18 +2,16 @@ package com.erp.academic_aditya.service;
 
 import com.erp.academic_aditya.dto.LoginRequest;
 import com.erp.academic_aditya.dto.StudentRequest;
-import com.erp.academic_aditya.dto.StudentResponse;
 import com.erp.academic_aditya.entity.Student;
 import com.erp.academic_aditya.exception.StudentNotFound;
 import com.erp.academic_aditya.helper.EncryptionService;
 import com.erp.academic_aditya.helper.JwtHelper;
 import com.erp.academic_aditya.mapper.StudentMapper;
+import com.erp.academic_aditya.repo.StudentBillsRepository;
+import com.erp.academic_aditya.repo.StudentPaymentRepository;
 import com.erp.academic_aditya.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,9 @@ public class StudentService {
     private final StudentRepository studentRepo;
     private final StudentMapper studentMapper;
     private final EncryptionService encryptionService;
+    private final StudentPaymentRepository studentPaymentRepository;
     private final JwtHelper jwtHelper;
+    private final StudentBillsRepository studentBillsRepository;
 
     public String loginChecking(LoginRequest req){
         Student student=studentRepo.findByEmail(req.email())
@@ -34,9 +34,6 @@ public class StudentService {
 
 
     }
-
-
-
 
     // Helper: Validate JWT token
     private boolean isValidToken(String token) {
@@ -70,12 +67,6 @@ public class StudentService {
         existingStudent.setPassword(encryptionService.encode(studentRequest.password()));
         studentRepo.save(existingStudent);
         return "Student updated successfully!";
-    }
-
-    public String deleteStudent(Long id, String token) {
-        if (!isValidToken(token)) return "Invalid Token";
-        studentRepo.deleteById(id);
-        return "Student deleted successfully!";
     }
 
 }

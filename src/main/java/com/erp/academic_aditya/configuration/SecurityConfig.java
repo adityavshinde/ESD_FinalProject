@@ -1,31 +1,47 @@
 package com.erp.academic_aditya.configuration;
 
-import com.erp.academic_aditya.helper.RequestInterceptor;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@RequiredArgsConstructor
-public class SecurityConfig  implements WebMvcConfigurer {
+@EnableWebSecurity
+public class SecurityConfig {
 
-    private final RequestInterceptor requestInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // Apply the interceptor to all endpoints except /auth/login
-
-        registry.addInterceptor(requestInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/**","/api/v1/payments/","/api/v1/auth/","/students","/bills/**");
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll() // Allows access to all endpoints without authentication
+                )
+                .csrf(csrf -> csrf.disable());
+        return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // Configure global CORS settings
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000") // React app URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

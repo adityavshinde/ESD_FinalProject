@@ -23,7 +23,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.loginChecking(request));
     }
 
-
     // Create a new student
     @PostMapping
     public String saveStudent(@RequestBody StudentRequest studentRequest) {
@@ -35,6 +34,5 @@ public class StudentController {
     public String getStudentById(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         return studentService.getStudentById(id, token);
     }
-
 
 }

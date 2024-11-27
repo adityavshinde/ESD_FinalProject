@@ -13,9 +13,9 @@ import java.util.Optional;
 @Repository
 public interface StudentBillsRepository extends JpaRepository<StudentBills, Long> {
 
-//    List<StudentBills> findByBill_StudentId(Long studentId);
-@Query("SELECT sb.bill FROM StudentBills sb WHERE sb.student.studentId = :studentId")
-List<Bills> findBillsByStudentId(Long studentId);
+    //    List<StudentBills> findByBill_StudentId(Long studentId);
+    @Query("SELECT sb.bill FROM StudentBills sb WHERE sb.student.studentId = :studentId")
+    List<Bills> findBillsByStudentId(Long studentId);
 
     Optional<StudentBills> findByBillId(Long billId);
 
