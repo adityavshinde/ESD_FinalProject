@@ -44,9 +44,9 @@ The **Student Billing Management System** simplifies the billing and payment wor
   **Request Body (JSON):**
   ```json
   {
-    "rollNumber": "MT010",
-    "firstName": "Aditya",
-    "lastName": "Shinde",
+    "roll_no": "MT010",
+    "first_name": "Aditya",
+    "last_name": "Shinde",
     "email": "Aditya.Shinde@iiitb.ac.in",
     "password": "pass1234"
   }
